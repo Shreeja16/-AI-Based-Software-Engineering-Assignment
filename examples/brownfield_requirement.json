@@ -1,0 +1,4 @@
+{
+  "requirement": "Enhance the existing URL shortener with expiring links and richer analytics without breaking existing redirect behavior.",
+  "scenario_type": "brownfield"
+}
