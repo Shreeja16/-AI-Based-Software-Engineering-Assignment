@@ -56,7 +56,8 @@ def _is_valid_payload(data: dict[str, Any]) -> bool:
 
 def _try_ollama(requirement: str, scenario_type: str) -> dict[str, Any] | None:
     """Try to generate using local Ollama instance."""
-    model = os.getenv("OLLAMA_MODEL", "mistral")
+    model = os.getenv("OLLAMA_MODEL", "qwen2.5-coder:3b")
+    print(model)
     user_prompt = (
         f"Requirement:\n{requirement}\n\n"
         f"Scenario Type: {scenario_type}\n\n"
@@ -74,9 +75,12 @@ def _try_ollama(requirement: str, scenario_type: str) -> dict[str, Any] | None:
     }
 
     try:
-        with httpx.Client(timeout=60.0) as client:
+        print("http call happened")
+        with httpx.Client(timeout=600.0) as client:
             response = client.post(OLLAMA_API_URL, json=payload)
         response.raise_for_status()
+
+        print("got response")
         
         # Ollama returns response in a slightly different format
         result = response.json()
@@ -109,7 +113,8 @@ def _try_ollama(requirement: str, scenario_type: str) -> dict[str, Any] | None:
 
         data["artifacts"] = artifacts
         return data
-    except Exception:
+    except Exception as e:
+        print("Exception",e)
         return None
 
 

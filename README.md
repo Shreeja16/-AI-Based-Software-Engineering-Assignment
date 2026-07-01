@@ -40,13 +40,13 @@ To enable real LLM-backed generation for `/engineering/run`:
 1. Download and install Ollama from [https://ollama.ai](https://ollama.ai)
 2. Start Ollama (runs on http://localhost:11434 by default)
 3. In PowerShell, pull a model:
-   - `ollama run mistral` (or other model)
+   - `ollama run qwen2.5-coder:3b` (or other model)
 4. Keep Ollama running, then in a new PowerShell tab:
    - `uvicorn app.main:app --reload`
 5. Server will auto-detect Ollama and use it for generation.
 
 Optional: Override model name:
-   - PowerShell: `$env:OLLAMA_MODEL="mistral"`
+   - PowerShell: `$env:OLLAMA_MODEL="qwen2.5-coder:3b"`
 
 ### Option 2: OpenAI API (Paid, ~$0.01-0.05 per call)
 1. Get API key from [https://platform.openai.com/account/api-keys](https://platform.openai.com/account/api-keys)
