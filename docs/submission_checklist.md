@@ -7,7 +7,7 @@
 - [x] Architecture overview included
 - [x] Greenfield, brownfield, and ambiguous examples included
 - [x] Tests included and passing
-- [] Repository link shared with hiring team
+- [x] Repository link shared with hiring team
 
 ## Validation Evidence
 - [x] `pytest -q` passes locally
