@@ -57,3 +57,14 @@ def test_engineering_pipeline_output_shape():
     assert "tasks" in data
     assert "artifacts" in data
     assert "validation" in data
+
+    assert len(data["tasks"]) >= 5
+    first_task = data["tasks"][0]
+    assert "id" in first_task
+    assert "title" in first_task
+    assert "depends_on" in first_task
+    assert "ai_assist" in first_task
+    assert "engineer_validation" in first_task
+
+    assert data["artifacts"]["generation_mode"] in {"fallback", "ollama", "openai"}
+    assert any("Task dependency graph" in check for check in data["validation"]["checks"])

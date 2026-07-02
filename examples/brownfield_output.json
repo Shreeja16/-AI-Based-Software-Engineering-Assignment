@@ -1,0 +1,144 @@
+{
+  "clarified_problem": "Engineer a production-minded Python service for: Enhance the existing URL shortener with expiring links and richer analytics without breaking existing redirect behavior.",
+  "ambiguities": [
+    "Analytics granularity and retention policy are not specified."
+  ],
+  "assumptions": [
+    "REST APIs will be exposed via FastAPI.",
+    "SQLite is used for prototype persistence; production can use Postgres.",
+    "No authentication is required for MVP demo endpoints.",
+    "Backward compatibility for existing API contracts must be preserved."
+  ],
+  "tasks": [
+    {
+      "id": "T0",
+      "title": "Assess Existing System",
+      "description": "Assess existing modules and define an incremental change strategy that preserves behavior.",
+      "depends_on": [],
+      "ai_assist": {
+        "prompt": "Summarize existing architecture and identify safe extension points.",
+        "expected_ai_output": "Draft implementation artifacts that require engineer review before acceptance."
+      },
+      "engineer_validation": "Review impact radius and confirm compatibility constraints are explicit."
+    },
+    {
+      "id": "T1",
+      "title": "Define API Contracts",
+      "description": "Define request/response schemas and endpoint behavior including error contracts.",
+      "depends_on": [
+        "T0"
+      ],
+      "ai_assist": {
+        "prompt": "Generate OpenAPI-aligned endpoint contracts and error responses for this requirement.",
+        "expected_ai_output": "Draft implementation artifacts that require engineer review before acceptance."
+      },
+      "engineer_validation": "Review schema correctness, naming clarity, and backward compatibility constraints."
+    },
+    {
+      "id": "T2",
+      "title": "Design Persistence",
+      "description": "Model entities and storage access patterns for required system data.",
+      "depends_on": [
+        "T1"
+      ],
+      "ai_assist": {
+        "prompt": "Draft SQLAlchemy models and data access boundaries for required entities.",
+        "expected_ai_output": "Draft implementation artifacts that require engineer review before acceptance."
+      },
+      "engineer_validation": "Verify indexes, uniqueness, nullability, and migration impact."
+    },
+    {
+      "id": "T3",
+      "title": "Implement URL Core Flows",
+      "description": "Implement URL creation, redirect, metadata retrieval, and stats endpoints.",
+      "depends_on": [
+        "T1",
+        "T2"
+      ],
+      "ai_assist": {
+        "prompt": "Generate handler/service code for URL creation, redirect, metadata, and stats.",
+        "expected_ai_output": "Draft implementation artifacts that require engineer review before acceptance."
+      },
+      "engineer_validation": "Manually verify behavior for successful, missing, and expired link flows."
+    },
+    {
+      "id": "T4",
+      "title": "Implement Analytics Capture",
+      "description": "Capture click analytics fields including timestamp, referrer, user-agent, and anonymized IP hash.",
+      "depends_on": [
+        "T2",
+        "T3"
+      ],
+      "ai_assist": {
+        "prompt": "Generate analytics event capture logic and privacy-aware data handling.",
+        "expected_ai_output": "Draft implementation artifacts that require engineer review before acceptance."
+      },
+      "engineer_validation": "Verify click count integrity and ensure no raw client IP is stored."
+    },
+    {
+      "id": "T5",
+      "title": "Add Tests",
+      "description": "Add unit and integration tests covering happy paths, edge cases, and regressions.",
+      "depends_on": [
+        "T3",
+        "T4"
+      ],
+      "ai_assist": {
+        "prompt": "Generate pytest cases for success paths, error handling, and regressions.",
+        "expected_ai_output": "Draft implementation artifacts that require engineer review before acceptance."
+      },
+      "engineer_validation": "Run tests and confirm behavior-level assertions, not just status-code assertions."
+    },
+    {
+      "id": "T6",
+      "title": "Document Design and Risks",
+      "description": "Document assumptions, design trade-offs, and operational limitations.",
+      "depends_on": [
+        "T5"
+      ],
+      "ai_assist": {
+        "prompt": "Draft architecture notes including scaling, security, and maintainability trade-offs.",
+        "expected_ai_output": "Draft implementation artifacts that require engineer review before acceptance."
+      },
+      "engineer_validation": "Confirm documentation aligns with implemented behavior and known limitations."
+    }
+  ],
+  "artifacts": {
+    "api_contract": "POST /links, GET /{short_code}, GET /links/{short_code}, GET /links/{short_code}/stats, POST /engineering/run",
+    "task_summary": "T0: Assess Existing System | T1: Define API Contracts | T2: Design Persistence | T3: Implement URL Core Flows | T4: Implement Analytics Capture | T5: Add Tests | T6: Document Design and Risks",
+    "test_plan": [
+      "Validate link creation with valid/invalid URLs.",
+      "Validate redirect flow and click counter increments.",
+      "Validate stats endpoint reflects click totals.",
+      "Validate expired link handling returns HTTP 410.",
+      "Validate engineering pipeline response structure.",
+      "Add regression tests for unchanged legacy behavior."
+    ],
+    "documentation": "This prototype demonstrates AI-assisted requirement interpretation, task decomposition, artifact generation, and validation while preserving engineer ownership of outputs.",
+    "generated_outputs": [
+      "Code implementation updates in API, service, and persistence layers",
+      "API contract definitions using FastAPI/Pydantic schemas",
+      "Pytest integration tests for health, redirect behavior, expiry handling, and engineering pipeline",
+      "Architecture, demo, and submission documentation"
+    ],
+    "ai_execution_notes": [
+      "Each task defines a bounded AI prompt and expected output.",
+      "Engineer validates correctness before accepting generated outputs.",
+      "Validation stage records quality checks and risks before final acceptance."
+    ],
+    "requirement": "Enhance the existing URL shortener with expiring links and richer analytics without breaking existing redirect behavior.",
+    "generation_mode": "fallback"
+  },
+  "validation": {
+    "checks": [
+      "All core artifact sections are present.",
+      "Test plan includes multiple functional and edge-path validations.",
+      "AI-assisted execution notes are present for engineer review traceability.",
+      "Task dependency graph is internally consistent."
+    ],
+    "risks": [
+      "AI-generated tasks can miss hidden constraints unless manually reviewed.",
+      "Performance and abuse protection controls are not production-complete in this prototype."
+    ]
+  }
+}

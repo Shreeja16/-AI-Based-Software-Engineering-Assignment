@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from app.ai.artifact_generator import generate_artifacts
 from app.ai.llm_pipeline import generate_with_llm
 from app.ai.requirement_analyzer import analyze_requirement
-from app.ai.task_decomposer import decompose_tasks
+from app.ai.task_decomposer import build_structured_tasks_from_text, decompose_tasks
 from app.ai.validator import validate_output
 from app.db.session import get_db
 from app.schemas.engineering import EngineeringRunRequest, EngineeringRunResponse
@@ -66,15 +66,19 @@ def run_engineering_pipeline(payload: EngineeringRunRequest):
     llm_result = generate_with_llm(payload.requirement, payload.scenario_type)
 
     if llm_result is not None:
+        raw_tasks = llm_result.get("tasks", [])
+        tasks = build_structured_tasks_from_text(raw_tasks, payload.scenario_type)
+
         artifacts = llm_result["artifacts"]
         provider = artifacts.pop("provider", "llm")  # Extract provider and remove from artifacts
+        artifacts["task_summary"] = " | ".join(f"{task['id']}: {task['title']}" for task in tasks)
         artifacts["generation_mode"] = provider
-        validation = validate_output(artifacts)
+        validation = validate_output(artifacts, tasks)
         return {
             "clarified_problem": llm_result["clarified_problem"],
             "ambiguities": llm_result["ambiguities"],
             "assumptions": llm_result["assumptions"],
-            "tasks": llm_result["tasks"],
+            "tasks": tasks,
             "artifacts": artifacts,
             "validation": validation,
         }
@@ -83,7 +87,7 @@ def run_engineering_pipeline(payload: EngineeringRunRequest):
     tasks = decompose_tasks(payload.requirement, payload.scenario_type)
     artifacts = generate_artifacts(payload.requirement, payload.scenario_type, tasks)
     artifacts["generation_mode"] = "fallback"
-    validation = validate_output(artifacts)
+    validation = validate_output(artifacts, tasks)
 
     return {
         "clarified_problem": analyzed["clarified_problem"],

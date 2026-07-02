@@ -1,0 +1,128 @@
+{
+  "clarified_problem": "Engineer a production-minded Python service for: Build an enterprise-ready link platform for marketing teams.",
+  "ambiguities": [
+    "Business domain scope is broad and needs clarification."
+  ],
+  "assumptions": [
+    "REST APIs will be exposed via FastAPI.",
+    "SQLite is used for prototype persistence; production can use Postgres.",
+    "No authentication is required for MVP demo endpoints."
+  ],
+  "tasks": [
+    {
+      "id": "TQ",
+      "title": "Clarify Ambiguities",
+      "description": "Produce clarification questions and temporary assumptions before implementation.",
+      "depends_on": [],
+      "ai_assist": {
+        "prompt": "Generate top ambiguity questions and ranked assumptions for engineering execution.",
+        "expected_ai_output": "Draft implementation artifacts that require engineer review before acceptance."
+      },
+      "engineer_validation": "Approve assumptions explicitly and track unresolved ambiguity risks."
+    },
+    {
+      "id": "T1",
+      "title": "Define API Contracts",
+      "description": "Define request/response schemas and endpoint behavior including error contracts.",
+      "depends_on": [
+        "TQ"
+      ],
+      "ai_assist": {
+        "prompt": "Generate OpenAPI-aligned endpoint contracts and error responses for this requirement.",
+        "expected_ai_output": "Draft implementation artifacts that require engineer review before acceptance."
+      },
+      "engineer_validation": "Review schema correctness, naming clarity, and backward compatibility constraints."
+    },
+    {
+      "id": "T2",
+      "title": "Design Persistence",
+      "description": "Model entities and storage access patterns for required system data.",
+      "depends_on": [
+        "T1"
+      ],
+      "ai_assist": {
+        "prompt": "Draft SQLAlchemy models and data access boundaries for required entities.",
+        "expected_ai_output": "Draft implementation artifacts that require engineer review before acceptance."
+      },
+      "engineer_validation": "Verify indexes, uniqueness, nullability, and migration impact."
+    },
+    {
+      "id": "T3",
+      "title": "Implement Core Requirement",
+      "description": "Implement business logic required by the requirement scope.",
+      "depends_on": [
+        "T1",
+        "T2"
+      ],
+      "ai_assist": {
+        "prompt": "Generate service-layer implementation for the core requirement.",
+        "expected_ai_output": "Draft implementation artifacts that require engineer review before acceptance."
+      },
+      "engineer_validation": "Validate domain behavior against requirement acceptance criteria."
+    },
+    {
+      "id": "T5",
+      "title": "Add Tests",
+      "description": "Add unit and integration tests covering happy paths, edge cases, and regressions.",
+      "depends_on": [
+        "T3"
+      ],
+      "ai_assist": {
+        "prompt": "Generate pytest cases for success paths, error handling, and regressions.",
+        "expected_ai_output": "Draft implementation artifacts that require engineer review before acceptance."
+      },
+      "engineer_validation": "Run tests and confirm behavior-level assertions, not just status-code assertions."
+    },
+    {
+      "id": "T6",
+      "title": "Document Design and Risks",
+      "description": "Document assumptions, design trade-offs, and operational limitations.",
+      "depends_on": [
+        "T5"
+      ],
+      "ai_assist": {
+        "prompt": "Draft architecture notes including scaling, security, and maintainability trade-offs.",
+        "expected_ai_output": "Draft implementation artifacts that require engineer review before acceptance."
+      },
+      "engineer_validation": "Confirm documentation aligns with implemented behavior and known limitations."
+    }
+  ],
+  "artifacts": {
+    "api_contract": "Define domain-specific APIs for the provided requirement plus POST /engineering/run",
+    "task_summary": "TQ: Clarify Ambiguities | T1: Define API Contracts | T2: Design Persistence | T3: Implement Core Requirement | T5: Add Tests | T6: Document Design and Risks",
+    "test_plan": [
+      "Validate primary business workflow happy paths.",
+      "Validate key failure and edge cases.",
+      "Validate API contract correctness and schema errors.",
+      "Validate regression safety for existing behavior.",
+      "Validate engineering pipeline response structure.",
+      "Validate ambiguity extraction and clarification questions."
+    ],
+    "documentation": "This prototype demonstrates AI-assisted requirement interpretation, task decomposition, artifact generation, and validation while preserving engineer ownership of outputs.",
+    "generated_outputs": [
+      "Code implementation updates in API, service, and persistence layers",
+      "API contract definitions using FastAPI/Pydantic schemas",
+      "Pytest integration tests for health, redirect behavior, expiry handling, and engineering pipeline",
+      "Architecture, demo, and submission documentation"
+    ],
+    "ai_execution_notes": [
+      "Each task defines a bounded AI prompt and expected output.",
+      "Engineer validates correctness before accepting generated outputs.",
+      "Validation stage records quality checks and risks before final acceptance."
+    ],
+    "requirement": "Build an enterprise-ready link platform for marketing teams.",
+    "generation_mode": "fallback"
+  },
+  "validation": {
+    "checks": [
+      "All core artifact sections are present.",
+      "Test plan includes multiple functional and edge-path validations.",
+      "AI-assisted execution notes are present for engineer review traceability.",
+      "Task dependency graph is internally consistent."
+    ],
+    "risks": [
+      "AI-generated tasks can miss hidden constraints unless manually reviewed.",
+      "Performance and abuse protection controls are not production-complete in this prototype."
+    ]
+  }
+}

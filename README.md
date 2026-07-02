@@ -4,6 +4,7 @@ This repository provides a runnable Python prototype for the assignment. It demo
 - A working URL shortener (mandatory use case)
 - Requirement-to-engineering-output pipeline
 - Greenfield, brownfield, and ambiguous scenario handling
+- Structured task decomposition with explicit sequence/dependencies
 - Validation and testing discipline for AI-assisted outputs
 
 ## Tech Stack
@@ -18,7 +19,7 @@ This repository provides a runnable Python prototype for the assignment. It demo
 - app/services/url_shortener.py: URL shortener business logic
 - app/ai/: requirement analysis, decomposition, artifact generation, validation
 - tests/test_app.py: integration tests
-- examples/: scenario payloads
+- examples/: scenario payloads and sample pipeline outputs
 - docs/architecture_overview.md: architecture summary
 
 ## Setup
@@ -89,9 +90,14 @@ The endpoint returns:
 - clarified problem statement
 - ambiguities
 - assumptions
-- decomposed tasks
+- decomposed tasks with dependencies and AI-assist prompts
 - generated artifacts
 - validation checks and risks
+
+Sample output artifacts are included for quick reviewer access:
+- examples/greenfield_output.json
+- examples/brownfield_output.json
+- examples/ambiguous_output.json
 
 ## Run Tests
 - pytest -q
@@ -116,9 +122,9 @@ The endpoint returns:
 ## Assignment Coverage Mapping
 1. Requirement Understanding: app/ai/requirement_analyzer.py
 2. Task Decomposition: app/ai/task_decomposer.py
-3. AI-Assisted Development: app/ai/* modules
-4. Engineering Output Generation: /engineering/run response artifacts + URL shortener implementation
-5. Validation and QA: app/ai/validator.py + tests/test_app.py
+3. AI-Assisted Development: app/ai/llm_pipeline.py + per-task AI assist metadata in task_decomposer.py
+4. Engineering Output Generation: /engineering/run response artifacts + URL shortener implementation + examples/*_output.json
+5. Validation and QA: app/ai/validator.py + tests/test_app.py + scenario output evidence
 6. Risk Awareness: validation risk output + architecture trade-offs
 7. Final Engineering Output: README + docs/architecture_overview.md + examples
 

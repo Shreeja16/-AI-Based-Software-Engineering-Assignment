@@ -45,6 +45,13 @@ curl -X POST "http://127.0.0.1:8000/engineering/run" -H "Content-Type: applicati
 curl -X POST "http://127.0.0.1:8000/engineering/run" -H "Content-Type: application/json" --data-binary "@examples/ambiguous_requirement.json"
 ```
 
+Optional: show pre-generated scenario outputs used in submission package:
+```powershell
+Get-Content examples/greenfield_output.json
+Get-Content examples/brownfield_output.json
+Get-Content examples/ambiguous_output.json
+```
+
 ## 4. Validation
 ```powershell
 python -m pytest -q
