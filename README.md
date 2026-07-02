@@ -96,8 +96,11 @@ The endpoint returns:
 
 Sample output artifacts are included for quick reviewer access:
 - examples/greenfield_output.json
+- examples/greenfield_output_ollama.json
 - examples/brownfield_output.json
+- examples/brownfield_output_ollama.json
 - examples/ambiguous_output.json
+- examples/ambiguous_output_ollama.json
 
 ## Run Tests
 - pytest -q
