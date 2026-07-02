@@ -2,7 +2,7 @@
 
 ## Required Deliverables
 - [x] Public GitHub repository created
-- [ ] Source code pushed to main branch
+- [x] Source code pushed to main branch
 - [x] README includes setup and run steps
 - [x] Architecture overview included
 - [x] Greenfield, brownfield, and ambiguous examples included
